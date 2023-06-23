@@ -33,6 +33,7 @@ function sketch(p5) {
 
 }
 
+
 export default function App() {
   const [state, setState] = React.useState({
     size: 10,
@@ -42,6 +43,19 @@ export default function App() {
   const increaseSize = React.useCallback(() => {
     setState(state => ({ ...state, size: state.size + 1 }));
   }, []);
+
+  const [frameTime, setFrameTime] = React.useState(0);
+  React.useEffect(() => {
+    let frameId
+    const frame = time => {
+      setFrameTime(time)
+      frameId = requestAnimationFrame(frame)
+    }
+
+    requestAnimationFrame(frame)
+    return () => cancelAnimationFrame(frameId)
+
+  },[])
 
   const addCircle = React.useCallback(() => {
     let newCircles = state.circles;
@@ -53,7 +67,7 @@ export default function App() {
      <ReactP5Wrapper sketch={sketch} size={state.size} circles={state.circles} /> 
       <button onClick={increaseSize}>Inc</button>
       <button onClick={addCircle}>Add</button>
-
+      {frameTime}
     </React.Fragment>
   
 }
