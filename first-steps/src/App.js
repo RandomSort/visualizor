@@ -75,7 +75,7 @@ export default function App() {
 
   const addCircle = React.useCallback(() => {
     let newCircles = state.circles;
-    newCircles.push({x: state.asdf[0].x, y: state.asdf[0].y});
+    newCircles.push({x: state.asdf[0].x + state.size/2, y: state.asdf[0].y + state.size/2});
     setState(state => ({ ...state, circles: newCircles }));
   }, [state.circles, state.asdf]);
 
